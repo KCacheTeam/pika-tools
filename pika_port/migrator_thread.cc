@@ -25,7 +25,7 @@ void MigratorThread::MigrateStringsDB() {
 
   rocksdb::ReadOptions iterator_options;
   const rocksdb::Snapshot* snapshot;
-  rocksdb::DB* rocksDB = db->get_db();
+  rocksdb::DB* rocksDB = db->GetDB();
   blackwidow::ScopeSnapshot ss(rocksDB, &snapshot);
   iterator_options.snapshot = snapshot;
   iterator_options.fill_cache = false;
@@ -130,7 +130,7 @@ void MigratorThread::MigrateListsDB() {
 	if (s.ok() && ttl > 0) {
       pink::RedisCmdArgsType argv;
       std::string cmd;
-      
+
       argv.push_back("EXPIRE");
       argv.push_back(k);
       argv.push_back(std::to_string(ttl));
@@ -189,7 +189,7 @@ void MigratorThread::MigrateHashesDB() {
 	if (s.ok() && ttl > 0) {
       pink::RedisCmdArgsType argv;
       std::string cmd;
-      
+
       argv.push_back("EXPIRE");
       argv.push_back(k);
       argv.push_back(std::to_string(ttl));
@@ -245,7 +245,7 @@ void MigratorThread::MigrateSetsDB() {
 	if (s.ok() && ttl > 0) {
       pink::RedisCmdArgsType argv;
       std::string cmd;
-      
+
       argv.push_back("EXPIRE");
       argv.push_back(k);
       argv.push_back(std::to_string(ttl));
@@ -303,7 +303,7 @@ void MigratorThread::MigrateZsetsDB() {
 	if (s.ok() && ttl > 0) {
       pink::RedisCmdArgsType argv;
       std::string cmd;
-      
+
       argv.push_back("EXPIRE");
       argv.push_back(k);
       argv.push_back(std::to_string(ttl));

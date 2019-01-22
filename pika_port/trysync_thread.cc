@@ -272,7 +272,9 @@ int TrysyncThread::Retransmit() {
   blackwidow::BlackwidowOptions bwOptions;
   bwOptions.options = options;
 
-  blackwidow::RedisStrings stringsDB;
+  blackwidow::BlackWidow bw;
+
+  blackwidow::RedisStrings stringsDB(&bw, blackwidow::kStrings);
   std::string path = db_path + "strings";
   s = stringsDB.Open(bwOptions, path);
   pinfo("Open strings DB %s result %s", path.c_str(), s.ToString().c_str());
@@ -280,7 +282,7 @@ int TrysyncThread::Retransmit() {
     migrators_.emplace_back(new MigratorThread((void*)(&stringsDB), &senders_, blackwidow::kStrings, thread_num));
   }
 
-  blackwidow::RedisLists listsDB;
+  blackwidow::RedisLists listsDB(&bw, blackwidow::kLists);
   path = db_path + "lists";
   s = listsDB.Open(bwOptions, path);
   pinfo("Open lists DB %s result %s", path.c_str(), s.ToString().c_str());
@@ -288,7 +290,7 @@ int TrysyncThread::Retransmit() {
     migrators_.emplace_back(new MigratorThread((void*)(&listsDB), &senders_, blackwidow::kLists, thread_num));
   }
 
-  blackwidow::RedisHashes hashesDB;
+  blackwidow::RedisHashes hashesDB(&bw, blackwidow::kHashes);
   path = db_path + "hashes";
   s = hashesDB.Open(bwOptions, path);
   pinfo("Open hashes DB %s result %s", path.c_str(), s.ToString().c_str());
@@ -296,7 +298,7 @@ int TrysyncThread::Retransmit() {
     migrators_.emplace_back(new MigratorThread((void*)(&hashesDB), &senders_, blackwidow::kHashes, thread_num));
   }
 
-  blackwidow::RedisSets setsDB;
+  blackwidow::RedisSets setsDB(&bw, blackwidow::kSets);
   path = db_path + "sets";
   s = setsDB.Open(bwOptions, path);
   pinfo("Open sets DB %s result %s", path.c_str(), s.ToString().c_str());
@@ -304,7 +306,7 @@ int TrysyncThread::Retransmit() {
     migrators_.emplace_back(new MigratorThread((void*)(&setsDB), &senders_, blackwidow::kSets, thread_num));
   }
 
-  blackwidow::RedisZSets zsetsDB;
+  blackwidow::RedisZSets zsetsDB(&bw, blackwidow::kZSets);
   path = db_path + "zsets";
   s = zsetsDB.Open(bwOptions, path);
   pinfo("Open zsets DB %s result %s", path.c_str(), s.ToString().c_str());
