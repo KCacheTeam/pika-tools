@@ -1,0 +1,3 @@
+[submodule "third/blackwidow"]
+	path = third/blackwidow
+	url = https://github.com/Axlgrep/blackwidow.git
