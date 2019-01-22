@@ -1,0 +1,14 @@
+#ctags
+tags
+
+#Compiled Object files
+*.o
+
+#Pika to Txt Binary file
+pika_to_txt/pika_to_txt
+
+#Binlog Sender Binary file
+binlog_sender/binlog_sender
+
+#Nemo to Blackwidow Binary file
+nemo_to_blackwidow/nemo_to_blackwidow
