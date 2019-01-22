@@ -9,6 +9,7 @@
 # FILE    : build.sh
 # ******************************************************
 
+# https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 # install gflags
 git clone https://github.com/gflags/gflags.git
 cd gflags
