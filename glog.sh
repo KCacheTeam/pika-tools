@@ -16,11 +16,11 @@ cd deps
 ### install cmake3 && automake for compiling glog
 ##############
 
-if [ ! -d "./cmake-3.10.3" ]; then
-  wget https://cmake.org/files/v3.10/cmake-3.10.3.tar.gz
-  tar -zxvf cmake-3.10.3.tar.gz
+if [ ! -d "./cmake-3.13.3" ]; then
+  wget https://github.com/Kitware/CMake/releases/download/v3.13.3/cmake-3.13.3.tar.gz
+  tar -zxvf cmake-3.13.3.tar.gz
 fi
-cd cmake-3.10.3 && ./bootstrap  && gmake && sudo gmake install && cd ..
+cd cmake-3.13.3 && ./bootstrap  && gmake && sudo gmake install && cd ..
 rm -f /usr/bin/cmake
 ln -s /usr/local/bin/cmake /usr/bin/cmake
 
@@ -31,13 +31,13 @@ autoreconf -ivf
 ### compile libunwind
 ##############
 
-if [ ! -d "./libunwind-1.1" ]; then
-  wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
-  tar -xf libunwind-1.1.tar.gz
+if [ ! -d "./libunwind-1.3.1" ]; then
+  wget https://github.com/libunwind/libunwind/releases/download/v1.3.1/libunwind-1.3.1.tar.gz
+  tar -xf libunwind-1.3.1.tar.gz
 fi
 
 mkdir libunwind
-cd libunwind-1.1
+cd libunwind-1.3.1
 ./configure --prefix=`pwd`/../libunwind
 make
 make install
