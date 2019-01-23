@@ -16,4 +16,9 @@ Pika-port 把自已伪装成 pika 的 slave, 通过 trysync 先把数据全量�
 ## Compilation
 ---
 
-sh build.sh
+### pika port for pika 2.3.x
+sh build2.sh
+
+
+### pika port for pika 3.0.x
+sh build3.sh
