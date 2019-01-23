@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ******************************************************
-# DESC    : pika port build script
+# DESC    : pika-port3 build script
 # AUTHOR  : Alex Stocks
 # VERSION : 1.0
 # LICENCE : Apache License 2.0
