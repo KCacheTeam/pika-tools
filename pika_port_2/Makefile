@@ -26,8 +26,9 @@ NEMO=$(NEMO_PATH)/lib/libnemo.a
 NEMO_ROCKSDB_PATH=$(THIRD_PATH)/nemo-rocksdb
 NEMO_ROCKSDB=$(NEMO_ROCKSDB_PATH)/lib/libnemodb.a
 
-UNWIND_PATH=../libunwind
-GLOG_PATH=../glog
+UNWIND_PATH=../deps/libunwind
+GFLAGS_PATH=../deps/gflags
+GLOG_PATH=../deps/glog
 NEMO=$(NEMO_PATH)/lib/libnemo.a
 PIKA_PATH=./pika2.3.6
 

@@ -9,16 +9,20 @@
 # FILE    : build.sh
 # ******************************************************
 
+mkdir -p deps
+cd deps
 
 ##############
 ### install cmake3 && automake for compiling glog
 ##############
 
-# wget https://cmake.org/files/v3.10/cmake-3.10.3.tar.gz
-# tar -zxvf cmake-3.10.3.tar.gz
-# cd cmake-3.10.3 && ./bootstrap  && gmake && sudo gmake install && cd ..
-# rm -f /usr/bin/cmake
-# ln -s /usr/local/bin/cmake /usr/bin/cmake
+if [ ! -d "./cmake-3.10.3" ]; then
+  wget https://cmake.org/files/v3.10/cmake-3.10.3.tar.gz
+  tar -zxvf cmake-3.10.3.tar.gz
+fi
+cd cmake-3.10.3 && ./bootstrap  && gmake && sudo gmake install && cd ..
+rm -f /usr/bin/cmake
+ln -s /usr/local/bin/cmake /usr/bin/cmake
 
 yum install -y automake 
 autoreconf -ivf  
@@ -26,9 +30,6 @@ autoreconf -ivf
 ##############
 ### compile libunwind
 ##############
-
-mkdir -p deps
-cd deps
 
 if [ ! -d "./libunwind-1.1" ]; then
   wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
@@ -64,10 +65,14 @@ cd ../..
 ### compile glog
 ##############
 
+mkdir -p glog
+
+# return to root dir
+cd ..
+
 cd third/glog
-./configure --includedir=../../gflags/include
+./configure --includedir=../../deps/gflags/include
 rm -rf build && mkdir -p build && cd build
-export CXXFLAGS="-fPIC" && cmake .. -DCMAKE_INSTALL_PREFIX=../../../glog && make VERBOSE=1 && make install
+export CXXFLAGS="-fPIC" && cmake .. -DCMAKE_INSTALL_PREFIX=../../../deps/glog && make VERBOSE=1 && make install
 cd ../../..
 
-cd ..

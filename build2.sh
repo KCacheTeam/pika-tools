@@ -11,7 +11,7 @@
 
 # https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 
-# sh glog.sh
+sh glog.sh
 
 # install compression lib
 sudo yum install -y snappy snappy-devel
