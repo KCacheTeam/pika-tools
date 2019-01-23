@@ -16,3 +16,6 @@
 [submodule "third/nemo"]
 	path = third/nemo
 	url = https://github.com/Qihoo360/nemo.git
+[submodule "third/glog"]
+	path = third/glog
+	url = https://github.com/Qihoo360/glog
