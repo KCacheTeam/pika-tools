@@ -27,5 +27,5 @@ sudo yum install -y lz4-devel
 # pls wait for about 30 minutes
 git submodule update --init --recursive --force
 
-# compile pika-port
-cd pika_port && make
+# compile pika-port for pika 3.0.x
+cd pika_port_3 && make
