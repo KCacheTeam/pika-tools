@@ -24,14 +24,35 @@ yum install -y automake
 autoreconf -ivf  
 
 ##############
+### compile libunwind
+##############
+
+mkdir -p deps
+cd deps
+
+if [ ! -d "./libunwind-1.1" ]; then
+  wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
+  tar -xf libunwind-1.1.tar.gz
+fi
+
+mkdir libunwind
+cd libunwind-1.1
+./configure --prefix=`pwd`/../libunwind
+make
+make install
+cd ..
+
+##############
 ### compile gflags
 ##############
 
 # 卸载系统的gflags
 # sudo yum remove -y gflags-devel
 # 下载编译gflags
-wget -O gflags-2.2.1.tar.gz https://github.com/gflags/gflags/archive/v2.2.1.tar.gz
-tar zxvf gflags-2.2.1.tar.gz
+if [ ! -d "./gflags-2.2.1" ]; then
+  wget -O gflags-2.2.1.tar.gz https://github.com/gflags/gflags/archive/v2.2.1.tar.gz
+  tar zxvf gflags-2.2.1.tar.gz
+fi
 cd gflags-2.2.1
 rm -rf build && mkdir -p build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=../../gflags
@@ -48,3 +69,5 @@ cd third/glog
 rm -rf build && mkdir -p build && cd build
 export CXXFLAGS="-fPIC" && cmake .. -DCMAKE_INSTALL_PREFIX=../../../glog && make VERBOSE=1 && make install
 cd ../../..
+
+cd ..
