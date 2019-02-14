@@ -319,7 +319,7 @@ void* TrysyncThread::ThreadMain() {
     PrepareRsync();
     std::string ip_port = slash::IpPortString(g_port_conf.master_ip, g_port_conf.master_port);
     int ret = slash::StartRsync(dbsync_path, kDBSyncModule + "_" + ip_port,
-	                g_port_conf.local_ip, g_port_conf.local_port + 3000);
+                    g_port_conf.local_ip, g_port_conf.local_port + 3000);
     if (0 != ret) {
       LOG(WARNING) << "Failed to start rsync, path:" << dbsync_path << " error : " << ret;
       return false;
