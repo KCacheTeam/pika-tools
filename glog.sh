@@ -24,8 +24,8 @@ cd cmake-3.13.3 && ./bootstrap  && gmake && sudo gmake install && cd ..
 rm -f /usr/bin/cmake
 ln -s /usr/local/bin/cmake /usr/bin/cmake
 
-yum install -y automake 
-autoreconf -ivf  
+yum install -y automake
+autoreconf -ivf
 
 ##############
 ### compile libunwind
