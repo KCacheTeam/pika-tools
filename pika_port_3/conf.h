@@ -19,6 +19,7 @@ class Conf {
    log_path = "./log/";
    dump_path = "./rsync_dump/";
    sync_batch_num = 512;
+   wait_bgsave_timeout = 1800; //30 minutes
   }
 
  public:
@@ -36,6 +37,7 @@ class Conf {
   std::string log_path;
   std::string dump_path;
   size_t sync_batch_num;
+  time_t wait_bgsave_timeout;
 };
 
 extern Conf g_conf;

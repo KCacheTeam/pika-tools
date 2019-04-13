@@ -131,7 +131,7 @@ bool TrysyncThread::RecvProc() {
     } else {
       if (argv.size() == 1 &&
           slash::string2l(reply.data(), reply.size(), &sid_)) {
-        // Luckly, I got your point, the sync is comming
+        // Luckily, I got your point, the sync is comming
         pinfo("Recv sid from master: %lld", sid_);
         g_pika_port->SetSid(sid_);
         break;
@@ -144,7 +144,7 @@ bool TrysyncThread::RecvProc() {
         // 1, Master do bgsave first.
         // 2, Master waiting for an existing bgsaving process
         // 3, Master do dbsyncing
-        pinfo("Need wait to sync");
+        pinfo("Need to wait for pika master sync");
         g_pika_port->NeedWaitDBSync();
         // break;
       } else {
@@ -380,9 +380,19 @@ void* TrysyncThread::ThreadMain() {
 
     if (g_pika_port->IsWaitingDBSync()) {
       pinfo("Waiting db sync");
+      static time_t wait_start = 0;
+      time_t cur_time = time(nullptr);
+      if (wait_start == 0) {
+        wait_start = cur_time;
+      }
       //Try to update offset by db sync
       if (TryUpdateMasterOffset()) {
         pinfo("Success Update Master Offset");
+      } else {
+        time_t diff = cur_time - wait_start;
+        if (g_conf.wait_bgsave_timeout < diff) {
+          pwarn("Pika-port has waited about %d seconds for pika master bgsave data", diff);
+        }
       }
     }
 
@@ -431,7 +441,7 @@ void* TrysyncThread::ThreadMain() {
     }
     pinfo("Finish to start rsync, path:%s", dbsync_path.c_str());
 
-    // Make sure the listenning addr of rsyncd is accessible, to avoid the corner case
+    // Make sure the listening addr of rsyncd is accessible, to avoid the corner case
     // that "rsync --daemon" process has started but can not bind its port which is
     // used by other process.
     pink::PinkCli *rsync = pink::NewRedisCli();

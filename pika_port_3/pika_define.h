@@ -67,7 +67,7 @@ const int PIKA_ROLE_DOUBLE_MASTER = 3;
 /*
  * The size of Binlogfile
  */
-//static uint64_t kBinlogSize = 128; 
+//static uint64_t kBinlogSize = 128;
 //static const uint64_t kBinlogSize = 1024 * 1024 * 100;
 
 enum RecordType {

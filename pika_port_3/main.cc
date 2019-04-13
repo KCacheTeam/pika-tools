@@ -80,8 +80,9 @@ static void Usage()
 {
     fprintf(stderr,
             "Usage: pika_port [-h] [-t local_ip -p local_port -i master_ip -o master_port "
-            "-m forward_ip -n forward_port -x forward_thread_num -y forward_passwd]\n"
-            "-f filenum -s offset -w password -r rsync_dump_path -l log_path \n"
+            "-m forward_ip -n forward_port -x forward_thread_num -y forward_passwd "
+            "-z bgsave-wait-timeout -f filenum -s offset -w password -r rsync_dump_path "
+            "-l log_path \n"
             "\t-h     -- show this help\n"
             "\t-t     -- local host ip(OPTIONAL default: 127.0.0.1) \n"
             "\t-p     -- local port(OPTIONAL) \n"
@@ -91,6 +92,7 @@ static void Usage()
             "\t-n     -- forward port(REQUIRED) \n"
             "\t-x     -- forward thread num(OPTIONAL default: 1) \n"
             "\t-y     -- forward password(OPTIONAL) \n"
+            "\t-z     -- max timeout duration for waiting pika master bgsave data (OPTIONAL default 1800s) \n"
             "\t-f     -- binlog filenum(OPTIONAL default: local offset) \n"
             "\t-s     -- binlog offset(OPTIONAL default: local offset) \n"
             "\t-w     -- password for master(OPTIONAL) \n"
@@ -151,6 +153,11 @@ int main(int argc, char *argv[])
       case 'y':
         snprintf(buf, 1024, "%s", optarg);
         g_conf.forward_passwd = std::string(buf);
+        break;
+      case 'z':
+        snprintf(buf, 1024, "%s", optarg);
+        slash::string2l(buf, strlen(buf), &(num));
+        g_conf.wait_bgsave_timeout = time_t(num);
         break;
 
       case 'f':
@@ -217,6 +224,7 @@ int main(int argc, char *argv[])
             << ", forward_port:"  << g_conf.forward_port << " "
             << ", forward_passwd:"  << g_conf.forward_passwd << " "
             << ", forward_thread_num:" << g_conf.forward_thread_num << " "
+            << ", wait_bgsave_timeout:"  << g_conf.wait_bgsave_timeout << " "
             << ", log_path:"   << g_conf.log_path << " "
             << ", dump_path:"  << g_conf.dump_path << " "
             << ", filenum:"    << g_conf.filenum << " "
@@ -225,7 +233,8 @@ int main(int argc, char *argv[])
             << ", sync_batch_num:"  << g_conf.sync_batch_num << " "
             << std::endl;
 
-  if (g_conf.master_port == 0 || g_conf.forward_port == 0 || g_conf.sync_batch_num == 0) {
+  if (g_conf.master_port == 0 || g_conf.forward_port == 0
+     || g_conf.sync_batch_num == 0 || g_conf.wait_bgsave_timeout <= 0) {
     fprintf (stderr, "Invalid Arguments\n" );
     Usage();
     exit(-1);
