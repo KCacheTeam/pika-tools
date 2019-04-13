@@ -16,6 +16,9 @@ This repo just supports Pika v3.0.x. If u wanna transfer data of Pika v2.3.x, pl
 
 ## Version list
 
+> V1.6
+    * Improvement: add wait-bgsave-timeout to give a warning when pika-port waits bgsave data for a long time
+
 > V1.5
 	* Improvement: add batch parameter to speed up transfering data between pika and pika/codis
 

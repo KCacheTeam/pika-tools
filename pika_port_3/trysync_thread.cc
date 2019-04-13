@@ -428,10 +428,13 @@ void* TrysyncThread::ThreadMain() {
     cli_->set_recv_timeout(30000);
 
     ip_port = slash::IpPortString(master_ip, master_port);
-    struct sockaddr_in laddr = {0};
-    socklen_t llen = sizeof(laddr);
-    ::getsockname(cli_->fd(), (struct sockaddr*) &laddr, &llen);
-    std::string lip(::inet_ntoa(laddr.sin_addr));
+
+    // struct sockaddr_in laddr = {0};
+    // socklen_t llen = sizeof(laddr);
+    // ::getsockname(cli_->fd(), (struct sockaddr*) &laddr, &llen);
+    // std::string lip(::inet_ntoa(laddr.sin_addr));
+    std::string lip(g_conf.local_ip);
+
     // We append the master ip port after module name
     // To make sure only data from current master is received
     int rsync_port = g_conf.local_port + 3000;

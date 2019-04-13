@@ -28,4 +28,7 @@ sudo yum install -y lz4-devel
 git submodule update --init --recursive --force
 
 # compile pika-port for pika 3.0.x
-cd pika_port_3 && make
+cd pika_port_3
+make
+export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+./pika_port

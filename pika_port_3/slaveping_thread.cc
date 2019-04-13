@@ -51,7 +51,12 @@ void* SlavepingThread::ThreadMain() {
   Status s;
   int connect_retry_times = 0;
   while (!should_stop() && g_pika_port->ShouldStartPingMaster()) {
-    if (!should_stop() && (cli_->Connect(g_pika_port->master_ip(), g_pika_port->master_port() + 2000)).ok()) {
+    if (!should_stop()
+         && (cli_->Connect(g_pika_port->master_ip(),
+             g_pika_port->master_port() + 2000,
+             // Bug Fix By AS on 20190413 12:49pm: ping thread should bind the same network ip as trysync thread
+             g_conf.local_ip)).ok()) {
+
       cli_->set_send_timeout(1000);
       cli_->set_recv_timeout(1000);
       connect_retry_times = 0;

@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
   char buf[1024];
   bool is_daemon = false;
   long num = 0;
-  while (-1 != (c = getopt(argc, argv, "t:p:i:o:f:s:w:r:l:m:n:x:y:b:dh"))) {
+  while (-1 != (c = getopt(argc, argv, "t:p:i:o:f:s:w:r:l:m:n:x:y:z:b:dh"))) {
     switch (c) {
       case 't':
         snprintf(buf, 1024, "%s", optarg);
