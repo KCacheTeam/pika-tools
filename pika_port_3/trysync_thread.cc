@@ -418,8 +418,15 @@ void* TrysyncThread::ThreadMain() {
     cli_->set_send_timeout(30000);
     cli_->set_recv_timeout(30000);
 
-    std::string ip_port = slash::IpPortString(master_ip, master_port);
     std::string lip(g_conf.local_ip);
+    // Bug Fix by AS on 20190414  22:22 pm:
+    // the pika master module name rule is: document_${slave_ip}:master_port
+    //
+    // document_${master_ip}:${master_port}
+    // std::string ip_port = slash::IpPortString(master_ip, master_port);
+    //
+    // document_${slave_ip}:master_port
+    std::string ip_port = slash::IpPortString(lip, master_port);
     // We append the master ip port after module name
     // To make sure only data from current master is received
     int rsync_port = g_conf.local_port + 3000;

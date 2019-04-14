@@ -8,7 +8,7 @@ Pika-port is like redis-port. it copy a snapshot of pika to pika/redis/codis and
 
 If u wanna get more details of Pika-port, pls read [Pika笔记](http://alexstocks.github.io/html/pika.html).
 
-This repo just supports Pika v3.0.x. If u wanna transfer data of Pika v2.3.x, pls visit [divebomb/pika/tools/pika_port](https://github.com/divebomb/pika/tree/master/tools/pika_port).
+This repo just supports Pika v3.0.x.
 
 ## Use Case
 
@@ -17,7 +17,8 @@ This repo just supports Pika v3.0.x. If u wanna transfer data of Pika v2.3.x, pl
 ## Version list
 
 > V1.6
-    * Improvement: add wait-bgsave-timeout to give a warning when pika-port waits bgsave data for a long time
+ * Improvement: add wait-bgsave-timeout to give a warning when pika-port waits bgsave data for a long time
+	* Improvement: change rsync configure file's module name from document_${master_ip}:${master_port} to document_${slave_ip}:master_port
 
 > V1.5
 	* Improvement: add batch parameter to speed up transfering data between pika and pika/codis
