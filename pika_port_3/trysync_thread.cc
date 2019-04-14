@@ -408,15 +408,6 @@ void* TrysyncThread::ThreadMain() {
 
     // Start rsync service
     PrepareRsync();
-    std::string ip_port = slash::IpPortString(g_conf.master_ip, g_conf.master_port);
-    int ret = slash::StartRsync(dbsync_path, kDBSyncModule + "_" + ip_port,
-                    g_conf.local_ip, g_conf.local_port + 3000);
-    if (0 != ret) {
-      pwarn("Failed to start rsync, path:%s, error: %d", dbsync_path.c_str(), ret);
-      return false;
-    }
-    pinfo("Finish to start rsync, path: %s", dbsync_path.c_str());
-
     Status connectStatus = cli_->Connect(master_ip, master_port, g_conf.local_ip);
     if (!connectStatus.ok()) {
       pwarn("Failed to connect to master %s:%d, status:%s, error:%m",
@@ -427,22 +418,17 @@ void* TrysyncThread::ThreadMain() {
     cli_->set_send_timeout(30000);
     cli_->set_recv_timeout(30000);
 
-    ip_port = slash::IpPortString(master_ip, master_port);
-
-    // struct sockaddr_in laddr = {0};
-    // socklen_t llen = sizeof(laddr);
-    // ::getsockname(cli_->fd(), (struct sockaddr*) &laddr, &llen);
-    // std::string lip(::inet_ntoa(laddr.sin_addr));
+    std::string ip_port = slash::IpPortString(master_ip, master_port);
     std::string lip(g_conf.local_ip);
-
     // We append the master ip port after module name
     // To make sure only data from current master is received
     int rsync_port = g_conf.local_port + 3000;
-    ret = slash::StartRsync(dbsync_path, kDBSyncModule + "_" + ip_port, lip, rsync_port);
+    int ret = slash::StartRsync(dbsync_path, kDBSyncModule + "_" + ip_port, lip, rsync_port);
     if (0 != ret) {
       pwarn("Failed to start rsync, path:%s, error:%d", dbsync_path.c_str(), ret);
     }
-    pinfo("Finish to start rsync, path:%s", dbsync_path.c_str());
+    pinfo("Finish to start rsync, path: %s, local address: %s:%d",
+          dbsync_path.c_str(), lip.c_str(), rsync_port);
 
     // Make sure the listening addr of rsyncd is accessible, to avoid the corner case
     // that "rsync --daemon" process has started but can not bind its port which is
