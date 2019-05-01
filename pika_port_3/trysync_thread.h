@@ -20,10 +20,10 @@ class TrysyncThread : public pink::Thread {
   TrysyncThread() {
     cli_ = pink::NewRedisCli();
     cli_->set_connect_timeout(1500);
-	set_thread_name("TrysyncThread");
+    set_thread_name("TrysyncThread");
     retransmit_flag_ = false;
-	senders_.resize(0);
-	migrators_.resize(0);
+    senders_.resize(0);
+    migrators_.resize(0);
   };
   virtual ~TrysyncThread();
 
