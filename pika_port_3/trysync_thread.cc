@@ -427,7 +427,7 @@ void* TrysyncThread::ThreadMain() {
     // std::string ip_port = slash::IpPortString(master_ip, master_port);
     //
     // document_${slave_ip}:master_port
-    std::string ip_port = slash::IpPortString(lip, master_port);
+    std::string ip_port = slash::IpPortString(g_conf.master_ip, master_port);
     // We append the master ip port after module name
     // To make sure only data from current master is received
     int rsync_port = g_conf.local_port + 3000;
