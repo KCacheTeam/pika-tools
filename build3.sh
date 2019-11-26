@@ -9,19 +9,15 @@
 # FILE    : build.sh
 # ******************************************************
 
-# https://github.com/facebook/rocksdb/blob/master/INSTALL.md
-# install gflags
-git clone https://github.com/gflags/gflags.git
-cd gflags
-git checkout v2.0
-./configure && make && sudo make install
-cd ..
+# install gflags-devel
+# sudo yum install -y glags-devel
 
 # install compression lib
-sudo yum install -y snappy snappy-devel
-sudo yum install -y zlib zlib-devel
-sudo yum install -y bzip2 bzip2-devel
-sudo yum install -y lz4-devel
+#sudo yum install -y snappy snappy-devel
+#sudo yum install -y zlib zlib-devel
+#sudo yum install -y bzip2 bzip2-devel
+#sudo yum install -y lz4-devel
+#sudo yum install -y gflags-devel
 
 # download third libs
 # pls wait for about 30 minutes
@@ -30,5 +26,5 @@ git submodule update --init --recursive --force
 # compile pika-port for pika 3.0.x
 cd pika_port_3
 make
-export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+#export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
 ./pika_port
