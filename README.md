@@ -2,6 +2,8 @@
 ---
 *Pika-port is used to move data from pika to pika/redis. This repo has been [included officially](https://github.com/Qihoo360/pika/wiki/pika%E5%88%B0redis%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7).*
 
+!!!**Attention**: This repo has been moved to [Axlgrep/pika-tools/pika-port][https://github.com/Axlgrep/pika-tools/tree/master/pika-port] which is lang-term maintained by [Axlgrep](https://github.com/Axlgrep).
+
 ## Intro
 ---
 
