@@ -36,6 +36,7 @@ void RedisSender::ConnectRedis() {
     cli_->set_send_timeout(10000);
     slash::Status s = cli_->Connect(ip_, port_);
     if (!s.ok()) {
+      delete cli_;
       cli_ = NULL;
       log_info("Can not connect to %s:%d: %s", ip_.data(), port_, s.ToString().data());
       continue;
@@ -147,6 +148,7 @@ int RedisSender::SendCommand(std::string &command) {
     pwarn("RedisSender %d fails to send redis command %s, times:%d", id_, command.c_str(), idx+1);
     cli_->Close();
     log_info("%s", s.ToString().data());
+    delete cli_;
     cli_ = NULL;
     ConnectRedis();
   } while(++idx < 3);

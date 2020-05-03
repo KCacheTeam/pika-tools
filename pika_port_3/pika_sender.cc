@@ -38,6 +38,7 @@ void PikaSender::ConnectRedis() {
     cli_->set_connect_timeout(1000);
     slash::Status s = cli_->Connect(ip_, port_);
     if (!s.ok()) {
+      delete cli_;
       cli_ = NULL;
       log_info("Can not connect to %s:%d: %s", ip_.data(), port_, s.ToString().data());
       continue;
@@ -126,6 +127,7 @@ void PikaSender::SendCommand(std::string &command, const std::string &key) {
     LoadKey(key);
     cli_->Close();
     log_info("%s", s.ToString().data());
+    delete cli_;
     cli_ = NULL;
     ConnectRedis();
   }
@@ -170,6 +172,7 @@ void *PikaSender::ThreadMain() {
     cli_->Recv(NULL);
   }
 
+  cli_->Close();
   delete cli_;
   cli_ = NULL;
   log_info("PikaSender thread complete");
